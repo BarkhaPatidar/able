@@ -19,7 +19,7 @@ window.friends = function() {
                 }
             };
         });
-        $.get("./../assets/mustache/friends.mustache", async function( ajaxData, status ) {
+        $.get("./../able/assets/mustache/friends.mustache", async function( ajaxData, status ) {
             template = ajaxData;
             if ( data ) await processTemplate(template, data);
         }); 

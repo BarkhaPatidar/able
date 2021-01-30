@@ -71,7 +71,7 @@ window.timeline = function() {
                 }
             };
         });
-        $.get("./../assets/mustache/timeline.mustache", function( ajaxData, status ) {
+        $.get("./../able/assets/mustache/timeline.mustache", function( ajaxData, status ) {
             template = ajaxData;
             if ( data ) processTimelineTemplate(template, data);
         }); 

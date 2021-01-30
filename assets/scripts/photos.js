@@ -9,7 +9,7 @@ window.photos = function() {
                 allPhotos : result
             }
         });
-        $.get("./../assets/mustache/photos.mustache", function( ajaxData, status ) {
+        $.get("./../able/assets/mustache/photos.mustache", function( ajaxData, status ) {
             template = ajaxData;
             if ( data ) processTemplate(template, data);
         }); 
