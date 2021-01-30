@@ -91,7 +91,7 @@ $(function() {
     function createNavbarTemplate() {
         var template;
         var data = "";
-        $.get("able/assets/mustache/navbar-menu.mustache", function( ajaxData, status ) {
+        $.get("./../able/assets/mustache/navbar-menu.mustache", function( ajaxData, status ) {
             template = ajaxData;
             processTemplate(template, data);
         }); 
@@ -106,7 +106,7 @@ $(function() {
     function createPostModalTemplate() {
         var template;
         var data = "";
-        $.get("able/assets/mustache/add-post.mustache", function( ajaxData, status ) {
+        $.get("./../able/assets/mustache/add-post.mustache", function( ajaxData, status ) {
             template = ajaxData;
             processModalTemplate(template, data);
         }); 

@@ -4,7 +4,7 @@ window.login = function() {
     function createTemplate() {
         var template;
         var data = "";
-        $.get("./../assets/mustache/login.mustache", function( ajaxData, status ) {
+        $.get("./../able/assets/mustache/login.mustache", function( ajaxData, status ) {
             template = ajaxData;
             processTemplate(template, data);
         }); 
