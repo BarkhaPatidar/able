@@ -11,14 +11,14 @@ $(function() {
             if(result) {
                 window.profile().initialize();
             } else {
+                window.login().initialize();
+                logEvents();
+                loginFormValidation();
                 browserPage = '/Login';
                 var stateObject = {
                     page : "Login"
                 }
                 window.history.pushState(stateObject, null, browserPage);
-                window.login().initialize();
-                logEvents();
-                loginFormValidation();
             }
         })
     }
@@ -36,12 +36,12 @@ $(function() {
             fadeErrorBox();
         } else {
             $('#main-container').html("");
+            window.profile().initialize();
             browserPage = '/Timeline';
             var stateObject = {
                 page : "Timeline"
             }
             window.history.pushState(stateObject, null, browserPage);
-            window.profile().initialize();
         }
        
     }
@@ -91,7 +91,7 @@ $(function() {
     function createNavbarTemplate() {
         var template;
         var data = "";
-        $.get("assets/mustache/navbar-menu.mustache", function( ajaxData, status ) {
+        $.get("./../assets/mustache/navbar-menu.mustache", function( ajaxData, status ) {
             template = ajaxData;
             processTemplate(template, data);
         }); 
@@ -106,7 +106,7 @@ $(function() {
     function createPostModalTemplate() {
         var template;
         var data = "";
-        $.get("assets/mustache/add-post.mustache", function( ajaxData, status ) {
+        $.get("./../assets/mustache/add-post.mustache", function( ajaxData, status ) {
             template = ajaxData;
             processModalTemplate(template, data);
         }); 
@@ -125,12 +125,12 @@ $(function() {
             $(activeElement).removeClass(active); 
             $(this).addClass(active);
             var activeValue = $(activeElement+' a').text();
+            switchActiveMenu(activeValue);
             browserPage = '/'+activeValue;
             var stateObject = {
                 page : activeValue
             }
             window.history.pushState(stateObject, null, browserPage);
-            switchActiveMenu(activeValue);
         });
     }
 
@@ -156,12 +156,12 @@ $(function() {
         if(state) { 
             var page = state.page;
             if(page == "Login") {
+                window.timeline().initialize();
                 browserPage = '/Timeline';
                 var stateObject = {
                     page : "Timeline"
                 }
                 window.history.pushState(stateObject, null, browserPage);
-                window.timeline().initialize();
             } else {
                 switchActiveMenu(page);
             }

@@ -9,7 +9,7 @@ window.about = function() {
                 aboutData : result
             };
         });
-        $.get("assets/mustache/about.mustache", function( ajaxData, status ) {
+        $.get("./../assets/mustache/about.mustache", function( ajaxData, status ) {
             template = ajaxData;
             if ( data ) processTemplate(template, data);
         }); 

@@ -9,7 +9,7 @@ window.navbar = function() {
             };
         });
         
-        $.get("assets/mustache/menu-bar.mustache", function( ajaxData, status ) {
+        $.get("./../assets/mustache/menu-bar.mustache", function( ajaxData, status ) {
             template = ajaxData;
             if ( data ) processTemplate(template, data);
         }); 
