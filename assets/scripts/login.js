@@ -19,18 +19,18 @@ window.login = function() {
     loginPage.checkLogin = async function() {
         var email = $('#email').val();
         var password = $('#password').val();
-        var result = false;
+        var resultData = false;
         await localforage.getItem("aboutData").then(async function (result) {
             if(result.email == email) {
                 if(result.password == password) {
                     var loginUserData = true;
                     await localforage.setItem("isLogin", loginUserData).then(function (loginResult) {
-                        result = loginResult;
+                        resultData = loginResult;
                     });
                 }
             }
         });
-        return result;
+        return resultData;
 
     }
 

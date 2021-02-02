@@ -1,6 +1,9 @@
-window.friends = function() {
+window.Friends = function() {
     var friendsPage = {};
-
+    const followValue = "Follow";
+    const following = "Following";
+    const unfollowValue = "Unfollow";
+    const unfollowing = "Unfollowing";
     async function createFriendsTemplate() {
         var template;
         var data = "";
@@ -10,10 +13,10 @@ window.friends = function() {
                 "checkStatus": function () {
                     return function (text, render) {
                         var status = render(text);
-                        if(status == "Following") {
-                            return "Unfollow";
+                        if(status == following) {
+                            return unfollowValue;
                         } else {
-                            return "Follow";
+                            return followValue;
                         }
                     }
                 }
@@ -41,17 +44,17 @@ window.friends = function() {
                 for(var i = 0; i < panelData.friends.length; i++) {
                     if(panelData.friends[i].userId == userId) {
                         
-                        if(statusValue == "Follow") {
-                            var status = "Following";
+                        if(statusValue == followValue) {
+                            var status = following;
                         } else {
-                            var status = "Unfollowing";
+                            var status = unfollowing;
                         }
                         panelData.friends[i].friendStatus = status;
                     }
                 }
                 await localforage.setItem("panelData", panelData).then(async function (data) {
                     await createFriendsTemplate();
-                    await window.profile().userProfileTab();
+                    await window.Profile().userProfileTab();
                     await unfollow();
                 });
             });

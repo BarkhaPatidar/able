@@ -1,4 +1,4 @@
-window.photos = function() {
+window.Photos = function() {
     var photosPage = {};
 
     async function createPhotosTemplate() {

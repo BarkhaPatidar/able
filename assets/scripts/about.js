@@ -1,4 +1,4 @@
-window.about = function() {
+window.About = function() {
     var aboutPage = {};
 
     async function createAboutTemplate() {
@@ -61,7 +61,7 @@ window.about = function() {
         await localforage.setItem("aboutData", aboutData).then(async function (result) {
             await createAboutTemplate();
             await window.navbar().initialize(); 
-            await window.profile().userProfileTab();
+            await window.Profile().userProfileTab();
         });
     }
 
@@ -75,11 +75,11 @@ window.about = function() {
         $(document).on('click', '#work-info-edit', function() {
             $('.basic-info-label-values.work-info').addClass(editable);
             $('#work-info-form-wrap').removeClass(editable).addClass(visible);
-        })
+        });
     }
 
     function basicInfoFormValidation() {
-        $(document).on('click', 'button[id^="basic-info-sub"]',function() {
+        $(document).on('click', '#basic-info-sub',function() {
             $("#basic-info-form").validate({
                 errorElement: "span",
                 rules : {
@@ -129,7 +129,7 @@ window.about = function() {
     }
 
     function workInfoFormValidation() {
-        $(document).on('click', 'button[id^="work-info-sub"]',function() {
+        $(document).on('click', '#work-info-sub',function() {
             $("#work-info-form").validate({
                 errorElement: "span",
                 rules : {

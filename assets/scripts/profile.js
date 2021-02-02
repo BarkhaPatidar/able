@@ -1,4 +1,4 @@
-window.profile = function() {
+window.Profile = function() {
     var profilePage = {};
     var see5MoreCount = 0;
     var see10MoreCount = 0;
@@ -25,41 +25,41 @@ window.profile = function() {
         var template;
         var data;
         var friends = [];
-        await localforage.getItem("aboutData").then(async function (profile) {
-            await localforage.getItem("panelData").then(async function (panel) {
-                await localforage.getItem("timelineData").then(function (posts) {
-                    for(var i = 0; i < panel.friends.length; i++) {
-                        if(panel.friends[i].friendStatus == "Following") {
-                            friends.push(panel.friends[i]);
-                        }
+        var profile, panel, posts;
+        
+        $.when(
+            localforage.getItem("aboutData").then(async function (profileData) {
+                profile = profileData;
+            }),
+            localforage.getItem("panelData").then(async function (panelData) {
+                panel = panelData;
+            }),
+            localforage.getItem("timelineData").then(function (postsData) {
+                posts = postsData;
+            })
+          
+        ).then(function() {
+            for(var i = 0; i < panel.friends.length; i++) {
+                if(panel.friends[i].friendStatus == "Following") {
+                    friends.push(panel.friends[i]);
+                }
+            }
+            data = {
+                myProfile : profile,
+                following : friends.length,
+                activities : posts.length,
+                "convertNum": function () {
+                    return function (text, render) {
+                        var num = render(text);
+                        return window.NumberFormat().convertNum(num);
                     }
-                    data = {
-                        myProfile : profile,
-                        following : friends.length,
-                        activities : posts.length,
-                        "convertNum": function () {
-                            return function (text, render) {
-                                var num = render(text);
-                                if(Math.abs(num) > 999999) {
-                                    var number = Math.sign(num)*((Math.abs(num)/1000000).toFixed(1)) + 'M'
-                                    return number;
-                                } else if(Math.abs(num) > 999) {
-                                    var number = Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'K'
-                                    return  number;
-                                } else {
-                                    var number = Math.sign(num)*Math.abs(num)
-                                    return  number;
-                                }
-                            }
-                        }
-                    };
-                });
-            });
+                }
+            };
+            $.get("./../assets/mustache/user-profile.mustache", function( ajaxData, status ) {
+                template = ajaxData;
+                if ( data ) processTabTemplate(template, data);
+            });   
         });    
-        $.get("./../able/assets/mustache/user-profile.mustache", function( ajaxData, status ) {
-            template = ajaxData;
-            if ( data ) processTabTemplate(template, data);
-        }); 
     }
 
     function processTabTemplate(template, data) {
@@ -91,21 +91,12 @@ window.profile = function() {
                 "convertNum": function () {
                     return function (text, render) {
                         var num = render(text);
-                        if(Math.abs(num) > 999999) {
-                            var number = Math.sign(num)*((Math.abs(num)/1000000).toFixed(1)) + 'M'
-                            return number;
-                        } else if(Math.abs(num) > 999) {
-                            var number = Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'K'
-                            return  number;
-                        } else {
-                            var number = Math.sign(num)*Math.abs(num)
-                            return  number;
-                        }
+                        return window.NumberFormat().convertNum(num);
                     }
                 }
             };
         }); 
-        $.get("./../able/assets/mustache/profile-friends.mustache", function( ajaxData, status ) {
+        $.get("./../assets/mustache/profile-friends.mustache", function( ajaxData, status ) {
             template = ajaxData;
             if ( data ) processFriendsTemplate(template, data);
         }); 
@@ -171,7 +162,7 @@ window.profile = function() {
             whoToFollow : whoToFollow
         };
         var template;
-        $.get("./../able/assets/mustache/who-to-follow.mustache", function( ajaxData, status ) {
+        $.get("./../assets/mustache/who-to-follow.mustache", function( ajaxData, status ) {
             template = ajaxData;
             if ( data ) processSee5MoreTemplate(template, data);
         });
@@ -236,7 +227,7 @@ window.profile = function() {
             freiends : freiends
         };
         var template;
-        $.get("./../able/assets/mustache/friends-icons.mustache", function( ajaxData, status ) {
+        $.get("./../assets/mustache/friends-icons.mustache", function( ajaxData, status ) {
             template = ajaxData;
             if ( data ) processSee10MoreTemplate(template, data);
         });
@@ -263,7 +254,7 @@ window.profile = function() {
         await createProfileTemplate();
         await see5More();
         await see10More();
-        await window.timeline().initialize();
+        await window.Timeline().initialize();
     }
 
     return profilePage;

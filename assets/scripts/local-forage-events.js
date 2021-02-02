@@ -1,13 +1,6 @@
 window.localData = function() {
     var localForageData = {};
 
-    function readyLocalForage() {
-        localforage.config({
-            name: 'Able App'
-        });
-        localforage.setDriver(localforage.LOCALSTORAGE);
-    }
-
     function storeInLocal() {
         $.get("./../able/assets/data/friends.json", function( panelData, status ) {
             localforage.setItem("panelData", panelData).then(function (result) {
@@ -26,7 +19,6 @@ window.localData = function() {
     }
 
     localForageData.initialize = function() {
-        readyLocalForage();
         storeInLocal();
     }
 

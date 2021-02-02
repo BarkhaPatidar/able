@@ -1,4 +1,4 @@
-window.timeline = function() {
+window.Timeline = function() {
     var timelinePage = {};
 
     async function createTimelineTemplate() {
@@ -10,63 +10,13 @@ window.timeline = function() {
                 "convertNum" : function () {
                     return function (text, render) {
                         var num = render(text);
-                        if(Math.abs(num) > 999999) {
-                            var number = Math.sign(num)*((Math.abs(num)/1000000).toFixed(1)) + 'M'
-                            return number;
-                        } else if(Math.abs(num) > 999) {
-                            var number = Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'K'
-                            return  number;
-                        } else {
-                            var number = Math.sign(num)*Math.abs(num)
-                            return  number;
-                        }
+                        return window.NumberFormat().convertNum(num);
                     }
                 },
                 "convertTime" : function () {
                     return function (text, render) {
                         var vidDate = render(text);
-                        var videoDate = new Date(vidDate);
-                        var today = new Date();
-                        var diff = Math.floor(today.getTime() - videoDate.getTime());
-                        var seconds = Math.floor((diff / 1000) % 60) ;
-                        var minutes = Math.floor((diff / (1000*60)) % 60);
-                        var hours   = Math.floor((diff / (1000*60*60)) % 24);
-                        var weeks = Math.floor(diff / 604800000)
-                        var day = 1000 * 60 * 60 * 24;
-                        var days = Math.floor(diff/day);
-                        var months = Math.floor(days/31);
-                        var years = Math.floor(months/12);
-                        if(years){
-                            var message = years+" years"
-                            return message;
-                        }
-                        if(months){
-                            var message = months+" months"
-                            return message;
-                        }
-                        if(weeks){
-                            var message = weeks+" weeks"
-                            return message;
-                        }
-                        if(days){
-                            var message = days+" days"
-                            return message;
-                        }
-                        if(hours){
-                            var message = hours+" hours"
-                            return message;
-                        }
-                        if(minutes){
-                            var message = minutes+" minutes"
-                            return message;
-                        }
-                        if(seconds){
-                            var message = seconds+" seconds"
-                            return message;
-                        } else {
-                            var message = "0 seconds"
-                            return message;
-                        }
+                        return moment(vidDate).fromNow();
                     }
                 }
             };
@@ -175,7 +125,7 @@ window.timeline = function() {
             });
             await localforage.setItem("timelineData", timelineData).then(async function (element) {
                 await createTimelineTemplate();
-                await window.profile().userProfileTab();
+                await window.Profile().userProfileTab();
                 await postFormValidation();
                 $('#imageURL').val("");
                 $('#caption').val("");

@@ -662,7 +662,7 @@ body {
 
                             img {
                                 height: 115px;
-                                width: 30%;
+                                width: 110px;
                             }
 
                             .friend-content {
@@ -708,7 +708,7 @@ body {
 }
 
 .add-scroll {
-    height: 250px;
+    max-height: 300px;
     overflow-y: scroll;
 }
 
@@ -833,7 +833,7 @@ body {
 
                                 img {
                                     height: 85px;
-                                    width: 20%;
+                                    width: 75px;
                                 }
 
                                 .friend-content {
@@ -878,10 +878,6 @@ body {
                     .frnd-request-container {
                         .friend-tab {
                             width: 92%;
-
-                            img {
-                                width: 35%;
-                            }
                         }
                     }
                 }
@@ -907,10 +903,6 @@ body {
                         .frnd-request-container {
                             .friend-tab {
                                 width: 49%;
-
-                                img {
-                                    width: 30%;
-                                }
                             }
                         }
                     }

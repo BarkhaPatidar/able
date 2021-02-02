@@ -1,26 +1,39 @@
 $(function() {
-    window.localData().initialize();
+    readyLocalForage();
     createNavbarTemplate();
     createPostModalTemplate();
     checkSession();
     logEvents();
     timelineMenu();
 
+    function readyLocalForage() {
+        localforage.config({
+            name: 'Able App'
+        });
+        localforage.setDriver(localforage.LOCALSTORAGE);
+    }
+
     async function checkSession() {
         await localforage.getItem("isLogin").then(function (result) {
+            var stateObject = {};
             if(result) {
-                window.profile().initialize();
+                window.Profile().initialize();
+                browserPage = '/Timeline';
+                stateObject = {
+                    page : "Timeline"
+                };
             } else {
                 window.login().initialize();
+                window.localData().initialize();
                 logEvents();
                 loginFormValidation();
-                browserPage = '/able/Login';
-                var stateObject = {
+                browserPage = '/Login';
+                stateObject = {
                     page : "Login"
-                }
-                window.history.pushState(stateObject, null, browserPage);
+                };
             }
-        })
+            window.history.pushState(stateObject, null, browserPage);
+        });
     }
 
     function logEvents() {
@@ -28,26 +41,27 @@ $(function() {
         logout();
     }
 
-    function login() {
-        var result = window.login().checkLogin();
+    async function login() {
+        var result = await window.login().checkLogin();
+        var loginError = '#login-error';
         if(result == false) {
-            $('#login-error').css('display','block');
-            $('#login-error').text('Your email or password is incorrect.');
+            $(loginError).show();
+            $(loginError).text('Your email or password is incorrect.');
             fadeErrorBox();
         } else {
             $('#main-container').html("");
-            window.profile().initialize();
-            browserPage = '/able/Timeline';
+            window.Profile().initialize();
+            browserPage = '/Timeline';
             var stateObject = {
                 page : "Timeline"
-            }
+            };
             window.history.pushState(stateObject, null, browserPage);
         }
        
     }
 
     function logout() {
-        $(document).on('click', 'a[id^="logout-btn"]', async function() {
+        $(document).on('click', '#logout-btn', async function() {
             await localforage.removeItem('isLogin').then(function() {
                 checkSession();
             })
@@ -55,7 +69,7 @@ $(function() {
     }
 
     function loginFormValidation() {
-        $(document).on('click', 'button[id^="login-btn"]',function() {
+        $(document).on('click', '#login-btn',function() {
             $("#login-form").validate({
                 errorElement: "span",
                 rules : {
@@ -121,15 +135,15 @@ $(function() {
     function timelineMenu() {
         $(document).on('click', '.timeline-bar li', function() {
             var activeElement = '.timeline-bar li.active';
-            var active = 'active'
+            var active = 'active';
             $(activeElement).removeClass(active); 
             $(this).addClass(active);
             var activeValue = $(activeElement+' a').text();
             switchActiveMenu(activeValue);
-            browserPage = '/able/'+activeValue;
+            browserPage = '/'+activeValue;
             var stateObject = {
                 page : activeValue
-            }
+            };
             window.history.pushState(stateObject, null, browserPage);
         });
     }
@@ -137,16 +151,16 @@ $(function() {
     function switchActiveMenu(activeValue) {
         switch(activeValue) {
             case "Timeline" :
-                window.timeline().initialize();
+                window.Timeline().initialize();
               break;
             case "About" :
-                window.about().initialize();
+                window.About().initialize();
               break;
             case "Photos" :
-                window.photos().initialize();
+                window.Photos().initialize();
               break;  
             case "Friends" :
-                window.friends().initialize();
+                window.Friends().initialize();
               break;  
         }
     }
@@ -156,18 +170,18 @@ $(function() {
         if(state) { 
             var page = state.page;
             if(page == "Login") {
-                window.timeline().initialize();
-                browserPage = '/able/Timeline';
+                window.Timeline().initialize();
+                browserPage = '/Timeline';
                 var stateObject = {
                     page : "Timeline"
-                }
+                };
                 window.history.pushState(stateObject, null, browserPage);
             } else {
                 switchActiveMenu(page);
             }
             $('.timeline-bar li').each(function(index) {
                 var activeElement = '.timeline-bar li.active';
-                var active = 'active'
+                var active = 'active';
                 var activeValue = $(this).find('a').text();
                 if(activeValue == page) {
                     $(activeElement).removeClass(active);
