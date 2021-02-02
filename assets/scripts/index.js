@@ -18,7 +18,7 @@ $(function() {
             var stateObject = {};
             if(result) {
                 window.Profile().initialize();
-                browserPage = '/Timeline';
+                browserPage = '/able/Timeline';
                 stateObject = {
                     page : "Timeline"
                 };
@@ -27,7 +27,7 @@ $(function() {
                 window.localData().initialize();
                 logEvents();
                 loginFormValidation();
-                browserPage = '/Login';
+                browserPage = '/able/Login';
                 stateObject = {
                     page : "Login"
                 };
@@ -51,7 +51,7 @@ $(function() {
         } else {
             $('#main-container').html("");
             window.Profile().initialize();
-            browserPage = '/Timeline';
+            browserPage = '/able/Timeline';
             var stateObject = {
                 page : "Timeline"
             };
@@ -140,7 +140,7 @@ $(function() {
             $(this).addClass(active);
             var activeValue = $(activeElement+' a').text();
             switchActiveMenu(activeValue);
-            browserPage = '/'+activeValue;
+            browserPage = '/able/'+activeValue;
             var stateObject = {
                 page : activeValue
             };
@@ -171,7 +171,7 @@ $(function() {
             var page = state.page;
             if(page == "Login") {
                 window.Timeline().initialize();
-                browserPage = '/Timeline';
+                browserPage = '/able/Timeline';
                 var stateObject = {
                     page : "Timeline"
                 };
