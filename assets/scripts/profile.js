@@ -55,7 +55,7 @@ window.Profile = function() {
                     }
                 }
             };
-            $.get("./../assets/mustache/user-profile.mustache", function( ajaxData, status ) {
+            $.get("./../able/assets/mustache/user-profile.mustache", function( ajaxData, status ) {
                 template = ajaxData;
                 if ( data ) processTabTemplate(template, data);
             });   
@@ -96,7 +96,7 @@ window.Profile = function() {
                 }
             };
         }); 
-        $.get("./../assets/mustache/profile-friends.mustache", function( ajaxData, status ) {
+        $.get("./../able/assets/mustache/profile-friends.mustache", function( ajaxData, status ) {
             template = ajaxData;
             if ( data ) processFriendsTemplate(template, data);
         }); 
@@ -162,7 +162,7 @@ window.Profile = function() {
             whoToFollow : whoToFollow
         };
         var template;
-        $.get("./../assets/mustache/who-to-follow.mustache", function( ajaxData, status ) {
+        $.get("./../able/assets/mustache/who-to-follow.mustache", function( ajaxData, status ) {
             template = ajaxData;
             if ( data ) processSee5MoreTemplate(template, data);
         });
@@ -227,7 +227,7 @@ window.Profile = function() {
             freiends : freiends
         };
         var template;
-        $.get("./../assets/mustache/friends-icons.mustache", function( ajaxData, status ) {
+        $.get("./../able/assets/mustache/friends-icons.mustache", function( ajaxData, status ) {
             template = ajaxData;
             if ( data ) processSee10MoreTemplate(template, data);
         });
